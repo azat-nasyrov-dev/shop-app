@@ -4,7 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import {fetchProducts} from "../../store/actions/productsActions";
+import {fetchProducts} from '../../store/actions/productsActions';
+import ProductItem from './ProductItem';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -26,9 +27,12 @@ const Products = () => {
       </Grid>
       <Grid item container spacing={1}>
         {products.map(product => (
-          <div key={product.id}>
-            {product.title} ({product.price})
-          </div>
+          <ProductItem
+            key={product.id}
+            id={product.id}
+            title={product.title}
+            price={product.price}
+          />
         ))}
       </Grid>
     </Grid>
