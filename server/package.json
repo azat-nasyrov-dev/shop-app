@@ -15,6 +15,7 @@
   "author": "Azat Nasyrov <azat.nasyrov31@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.2",
     "nanoid": "^3.2.0"
   },
