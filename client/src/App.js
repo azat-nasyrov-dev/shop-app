@@ -1,9 +1,13 @@
 import React from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppToolbar from './components/UI/AppToolbar/AppToolbar';
 
 const App = () => (
   <>
-    <header>Navbar will go here</header>
-    <main>Main content will go here</main>
+    <CssBaseline/>
+    <header>
+      <AppToolbar/>
+    </header>
   </>
 )
 
