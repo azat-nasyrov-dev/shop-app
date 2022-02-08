@@ -1,4 +1,5 @@
 import axiosApi from '../../axiosApi';
+import {NotificationManager} from 'react-notifications';
 
 export const FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST';
 export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
@@ -16,6 +17,7 @@ export const fetchProducts = () => {
       dispatch(fetchProductsSuccess(response.data));
     } catch (e) {
       dispatch(fetchProductsFailure());
+      NotificationManager.error('Could not fetch products');
     }
   }
 };

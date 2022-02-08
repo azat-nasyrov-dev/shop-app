@@ -4,9 +4,12 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import {BrowserRouter} from 'react-router-dom';
+import {NotificationContainer} from 'react-notifications';
 
 import App from './App';
 import productsReducer from './store/reducers/productsReducer';
+
+import 'react-notifications/lib/notifications.css';
 
 const rootReducer = combineReducers({
   products: productsReducer
@@ -19,6 +22,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMid
 const app = (
   <Provider store={store}>
     <BrowserRouter>
+      <NotificationContainer/>
       <App/>
     </BrowserRouter>
   </Provider>
