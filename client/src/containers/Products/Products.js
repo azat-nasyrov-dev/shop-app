@@ -6,10 +6,20 @@ import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {fetchProducts} from '../../store/actions/productsActions';
 import ProductItem from './ProductItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+  progress: {
+    height: 200
+  }
+}));
 
 const Products = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const products = useSelector(state => state.products.products);
+  const loading = useSelector(state => state.products.productsLoading);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -26,7 +36,13 @@ const Products = () => {
         </Grid>
       </Grid>
       <Grid item container spacing={1}>
-        {products.map(product => (
+        {loading ? (
+          <Grid container justifyContent="center" alignItems="center" className={classes.progress}>
+            <Grid item>
+              <CircularProgress/>
+            </Grid>
+          </Grid>
+        ) : products.map(product => (
           <ProductItem
             key={product.id}
             id={product.id}
