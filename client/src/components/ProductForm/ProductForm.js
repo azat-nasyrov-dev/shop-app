@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const ProductForm = () => {
+const ProductForm = ({onSubmit}) => {
   const [state, setState] = useState({
     title: '',
     price: '',
@@ -12,6 +12,8 @@ const ProductForm = () => {
 
   const submitHandler = e => {
     e.preventDefault();
+
+    onSubmit({...state});
   };
 
   const inputChangeHandler = e => {
