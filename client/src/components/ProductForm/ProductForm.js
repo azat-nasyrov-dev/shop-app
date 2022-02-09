@@ -12,10 +12,16 @@ const ProductForm = ({onSubmit}) => {
     image: '',
   });
 
-  const submitHandler = e => {
+  const submitFormHandler = e => {
     e.preventDefault();
 
-    onSubmit({...state});
+    const formData = new FormData();
+
+    Object.keys(state).forEach(key => {
+      formData.append(key, state[key]);
+    });
+
+    onSubmit(formData);
   };
 
   const inputChangeHandler = e => {
@@ -39,7 +45,7 @@ const ProductForm = ({onSubmit}) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitFormHandler}>
       <Grid container direction="column" spacing={2}>
         <Grid item xs>
           <TextField
