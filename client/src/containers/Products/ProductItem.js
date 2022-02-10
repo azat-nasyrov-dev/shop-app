@@ -10,6 +10,9 @@ import {Link} from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CardMedia from '@material-ui/core/CardMedia';
 
+import imageNotAvailable from '../../assets/images/imageNotAvailable.png';
+import {apiURL} from '../../config';
+
 const useStyles = makeStyles({
   card: {
     height: '100%'
@@ -23,12 +26,18 @@ const useStyles = makeStyles({
 const ProductItem = ({title, price, image, id}) => {
   const classes = useStyles();
 
+  let cardImage = imageNotAvailable;
+
+  if (image) {
+    cardImage = apiURL + '/uploads/' + image
+  }
+
   return (
     <Grid item xs sm md={6} lg={4}>
       <Card className={classes.card}>
         <CardHeader title={title}/>
         <CardMedia
-          image={'http://localhost:8000/uploads/' + image}
+          image={cardImage}
           title={title}
           className={classes.media}
         />
