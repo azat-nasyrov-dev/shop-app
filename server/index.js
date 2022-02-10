@@ -8,12 +8,16 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
-fileDb.init();
-
 const port = 8000;
 
 app.use('/products', products);
 
-app.listen(port, () => {
-  console.log(`Server started on ${port} port!`);
-});
+const run = async () => {
+  await fileDb.init();
+
+  app.listen(port, () => {
+    console.log(`Server started on ${port} port!`);
+  });
+};
+
+run().catch(console.error);

@@ -18,24 +18,24 @@ const upload = multer({storage});
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  const products = fileDb.getItems();
+router.get('/', async (req, res) => {
+  const products = await fileDb.getItems();
   res.send(products);
 });
 
-router.get('/:id', (req, res) => {
-  const product = fileDb.getItemById(req.params.id);
+router.get('/:id', async (req, res) => {
+  const product = await fileDb.getItemById(req.params.id);
   res.send(product);
 });
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   const product = req.body;
 
   if (req.file) {
     product.image = req.file.filename;
   }
 
-  fileDb.addItem(product);
+  await fileDb.addItem(product);
   res.send(product);
 });
 

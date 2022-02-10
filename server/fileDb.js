@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const {nanoid} = require('nanoid');
 
 const filename = './db.json';
@@ -6,26 +6,26 @@ const filename = './db.json';
 let data = [];
 
 module.exports = {
-  init() {
+  async init() {
     try {
-      const fileContents = fs.readFileSync(filename);
+      const fileContents = await fs.readFile(filename);
       data = JSON.parse(fileContents);
     } catch (e) {
       data = [];
     }
   },
-  getItems() {
+  async getItems() {
     return data;
   },
-  addItem(item) {
+  async addItem(item) {
     item.id = nanoid();
     data.push(item);
-    this.save();
+    await this.save();
   },
-  getItemById(id) {
+  async getItemById(id) {
     return data.find(item => item.id === id);
   },
-  save() {
-    fs.writeFileSync(filename, JSON.stringify(data, null, 2));
+  async save() {
+    await fs.writeFile(filename, JSON.stringify(data, null, 2));
   }
 }
