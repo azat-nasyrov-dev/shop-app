@@ -1,5 +1,6 @@
 {
   "ignore": [
-    "db.json"
+    "db.json",
+    "public/uploads/*"
   ]
 }

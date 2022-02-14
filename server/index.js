@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const fileDb = require('./fileDb');
+const mongoDb = require('./mongoDb');
 const products = require('./app/products');
 
 const app = express();
@@ -13,10 +13,14 @@ const port = 8000;
 app.use('/products', products);
 
 const run = async () => {
-  await fileDb.init();
+  await mongoDb.connect();
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
+  });
+
+  process.on('exit', () => {
+    mongoDb.disconnect();
   });
 };
 
