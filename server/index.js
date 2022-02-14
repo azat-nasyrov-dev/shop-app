@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const mongoDb = require('./mongoDb');
 const products = require('./app/products');
+const mongoose = require('mongoose');
 
 const app = express();
 app.use(express.static('public'));
@@ -13,7 +13,10 @@ const port = 8000;
 app.use('/products', products);
 
 const run = async () => {
-  await mongoDb.connect();
+  await mongoose.connect('mongodb://localhost/shop', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
