@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const products = require('./app/products');
 const mongoose = require('mongoose');
+const exitHook = require('async-exit-hook');
 
 const app = express();
 app.use(express.static('public'));
@@ -22,8 +23,10 @@ const run = async () => {
     console.log(`Server started on ${port} port!`);
   });
 
-  process.on('exit', () => {
-    mongoDb.disconnect();
+  exitHook(async callback => {
+    await mongoose.disconnect();
+    console.log('mongoose disconnected');
+    callback();
   });
 };
 

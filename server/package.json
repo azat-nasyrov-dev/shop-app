@@ -15,6 +15,7 @@
   "author": "Azat Nasyrov <azat.nasyrov31@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "async-exit-hook": "^2.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "mongodb": "^4.3.1",

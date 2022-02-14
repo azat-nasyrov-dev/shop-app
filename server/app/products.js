@@ -3,9 +3,7 @@ const express = require('express');
 const multer = require('multer');
 const {nanoid} = require('nanoid');
 const config = require('../config');
-const mongoDb = require('../mongoDb');
 const Product = require('../models/Product');
-const ObjectId = require('mongodb').ObjectId;
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,12 +29,10 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const db = mongoDb.getDb();
+    const product = await Product.findOne({_id: req.params.id});
 
-    const result = await db.collection('products').findOne({_id: new ObjectId(req.params.id)});
-
-    if (result) {
-      res.send(result);
+    if (product) {
+      res.send(product);
     } else {
       res.sendStatus(404);
     }
@@ -47,16 +43,16 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const product = req.body;
+    const productData = req.body;
 
     if (req.file) {
-      product.image = req.file.filename;
+      productData.image = req.file.filename;
     }
 
-    const db = mongoDb.getDb();
-    const result = await db.collection('products').insertOne(product);
+    const product = new Product(productData);
+    await product.save();
 
-    res.send({...product, _id: result.ops[0]});
+    res.send(product);
   } catch (e) {
     res.sendStatus(500);
   }
