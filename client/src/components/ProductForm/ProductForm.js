@@ -3,13 +3,15 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FileInput from '../UI/Form/FileInput';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const ProductForm = ({onSubmit}) => {
+const ProductForm = ({onSubmit, categories}) => {
   const [state, setState] = useState({
     title: '',
     price: '',
     description: '',
     image: '',
+    category: '',
   });
 
   const submitFormHandler = e => {
@@ -49,6 +51,29 @@ const ProductForm = ({onSubmit}) => {
       <Grid container direction="column" spacing={2}>
         <Grid item xs>
           <TextField
+            required
+            fullWidth
+            select
+            variant="outlined"
+            label="Category"
+            name="category"
+            value={state.category}
+            onChange={inputChangeHandler}
+          >
+            <MenuItem><i>Select a category</i></MenuItem>
+            {categories.map(category => (
+              <MenuItem
+                key={category._id}
+                value={category._id}
+              >
+                {category.title}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs>
+          <TextField
+            required
             fullWidth
             variant="outlined"
             id="title"
@@ -60,6 +85,7 @@ const ProductForm = ({onSubmit}) => {
         </Grid>
         <Grid item xs>
           <TextField
+            required
             fullWidth
             variant="outlined"
             type="number"

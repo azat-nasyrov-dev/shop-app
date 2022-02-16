@@ -8,11 +8,13 @@ import {NotificationContainer} from 'react-notifications';
 
 import App from './App';
 import productsReducer from './store/reducers/productsReducer';
+import categoriesReducer from './store/reducers/categoriesReducer';
 
 import 'react-notifications/lib/notifications.css';
 
 const rootReducer = combineReducers({
-  products: productsReducer
+  products: productsReducer,
+  categories: categoriesReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOL_EXTENSION_COMPOSE__ || compose;
