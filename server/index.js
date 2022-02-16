@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const products = require('./app/products');
 const categories = require('./app/categories');
+const users = require('./app/users');
 const mongoose = require('mongoose');
 const exitHook = require('async-exit-hook');
 
@@ -14,6 +15,7 @@ const port = 8000;
 
 app.use('/products', products);
 app.use('/categories', categories);
+app.use('/users', users);
 
 const run = async () => {
   await mongoose.connect('mongodb://localhost/shop', {
