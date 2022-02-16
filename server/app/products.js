@@ -20,7 +20,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate('category', 'title');
     res.send(products);
   } catch (e) {
     res.sendStatus(500);
@@ -54,7 +54,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 
     res.send(product);
   } catch (e) {
-    res.sendStatus(500);
+    res.status(400).send(e);
   }
 });
 
