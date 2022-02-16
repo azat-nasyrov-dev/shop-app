@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -12,9 +15,14 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre('save', function (next) {
-  console.log('I am about to save', this.username, this.password);
-  this.password += '|hello';
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+  const hash = await bcrypt.hash(this.password, salt);
+
+  this.password = hash;
+
   next();
 });
 
