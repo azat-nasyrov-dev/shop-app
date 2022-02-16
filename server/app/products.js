@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const product = await Product.findOne({_id: req.params.id});
+    const product = await Product.findOne({_id: req.params.id}).populate('category', 'title');
 
     if (product) {
       res.send(product);
