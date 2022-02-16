@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const products = require('./app/products');
+const categories = require('./app/categories');
 const mongoose = require('mongoose');
 const exitHook = require('async-exit-hook');
 
@@ -12,11 +13,12 @@ app.use(cors());
 const port = 8000;
 
 app.use('/products', products);
+app.use('/categories', categories);
 
 const run = async () => {
   await mongoose.connect('mongodb://localhost/shop', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 
   app.listen(port, () => {

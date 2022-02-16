@@ -4,7 +4,7 @@ let db = null;
 let client = null;
 
 const connect = async () => {
-  client = await MongoClient.connect('mongodb://localhost'); // { useUnifiedTopology: true }
+  client = await MongoClient.connect('mongodb://localhost'); // { useUnifiedTopology: true, useCreateIndex: true }
   db = client.db('shop');
 };
 
