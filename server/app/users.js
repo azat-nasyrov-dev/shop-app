@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const user = new User(req.body);
-
+    user.generateToken();
     await user.save()
     return res.send(user);
   } catch (error) {
@@ -27,7 +27,26 @@ router.post('/sessions', async (req, res) => {
     return res.status(401).send({error: 'Password is wrong'});
   }
 
-  return res.send({message: 'Username and password correct!'});
+  user.generateToken();
+  await user.save();
+
+  return res.send({message: 'Username and password correct!', user});
+});
+
+router.post('/secret', async (req, res) => {
+  const token = req.get('Authorization');
+
+  if (!token) {
+    return res.status(401).send({error: 'No token present'});
+  }
+
+  const user = await User.findOne({token});
+
+  if (!user) {
+    return res.status(401).send({error: 'Wrong token!'});
+  }
+
+  return res.send({message: 'Secret message', username: user.username});
 });
 
 module.exports = router;
