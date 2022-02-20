@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {NotificationContainer} from 'react-notifications';
+import history from './history';
 
 import App from './App';
 import productsReducer from './store/reducers/productsReducer';
@@ -35,12 +36,12 @@ const theme = createTheme({
 
 const app = (
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <MuiThemeProvider theme={theme}>
         <NotificationContainer/>
         <App/>
       </MuiThemeProvider>
-    </BrowserRouter>
+    </Router>
   </Provider>
 );
 
