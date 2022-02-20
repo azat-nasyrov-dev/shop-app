@@ -11,6 +11,7 @@ import productsReducer from './store/reducers/productsReducer';
 import categoriesReducer from './store/reducers/categoriesReducer';
 
 import 'react-notifications/lib/notifications.css';
+import {createTheme, MuiThemeProvider} from '@material-ui/core';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -21,11 +22,22 @@ const composeEnhancers = window.__REDUX_DEVTOOL_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
+const theme = createTheme({
+  props: {
+    MuiTextField: {
+      variant: 'outlined',
+      fullWidth: true,
+    }
+  }
+});
+
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <NotificationContainer/>
-      <App/>
+      <MuiThemeProvider theme={theme}>
+        <NotificationContainer/>
+        <App/>
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>
 );
