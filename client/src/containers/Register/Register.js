@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import {Link as RouterLink} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {registerUser} from "../../store/slices/usersSlice";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,6 +36,8 @@ const useStyles = makeStyles(theme => ({
 
 const Register = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState({
     username: '',
     password: '',
@@ -47,6 +51,7 @@ const Register = () => {
 
   const submitFormHandler = e => {
     e.preventDefault();
+    dispatch(registerUser(user));
   };
 
   return (

@@ -9,6 +9,7 @@ import {NotificationContainer} from 'react-notifications';
 import App from './App';
 import productsReducer from './store/reducers/productsReducer';
 import categoriesReducer from './store/reducers/categoriesReducer';
+import usersSlice from './store/slices/usersSlice';
 
 import 'react-notifications/lib/notifications.css';
 import {createTheme, MuiThemeProvider} from '@material-ui/core';
@@ -16,6 +17,7 @@ import {createTheme, MuiThemeProvider} from '@material-ui/core';
 const rootReducer = combineReducers({
   products: productsReducer,
   categories: categoriesReducer,
+  users: usersSlice.reducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOL_EXTENSION_COMPOSE__ || compose;
