@@ -7,11 +7,10 @@ import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import {registerUser} from '../../store/actions/usersActions';
 import FormElement from '../../components/UI/Form/FormElement';
+import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -45,6 +44,7 @@ const Register = () => {
   });
 
   const error = useSelector(state => state.users.registerError);
+  const loading = useSelector(state => state.users.registerLoading);
 
   const inputChangeHandler = e => {
     const {name, value} = e.target;
@@ -95,15 +95,17 @@ const Register = () => {
             error={getFieldError('password')}
           />
           <Grid item xs>
-            <Button
+            <ButtonWithProgress
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              loading={loading}
+              disabled={loading}
             >
               Sign up
-            </Button>
+            </ButtonWithProgress>
           </Grid>
           <Grid item container justifyContent="flex-end">
             <Grid item>
