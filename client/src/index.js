@@ -4,21 +4,21 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import {Router} from 'react-router-dom';
+import {createTheme, MuiThemeProvider} from '@material-ui/core';
 import {NotificationContainer} from 'react-notifications';
 import history from './history';
 
 import App from './App';
 import productsReducer from './store/reducers/productsReducer';
 import categoriesReducer from './store/reducers/categoriesReducer';
-import usersSlice from './store/slices/usersSlice';
+import usersReducer from './store/reducers/usersReducer';
 
 import 'react-notifications/lib/notifications.css';
-import {createTheme, MuiThemeProvider} from '@material-ui/core';
 
 const rootReducer = combineReducers({
   products: productsReducer,
   categories: categoriesReducer,
-  users: usersSlice.reducer,
+  users: usersReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOL_EXTENSION_COMPOSE__ || compose;

@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {Link as RouterLink} from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,9 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import {Link as RouterLink} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {registerUser} from "../../store/slices/usersSlice";
+import {registerUser} from '../../store/actions/usersActions';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -51,7 +51,8 @@ const Register = () => {
 
   const submitFormHandler = e => {
     e.preventDefault();
-    dispatch(registerUser(user));
+
+    dispatch(registerUser({...user}));
   };
 
   return (
@@ -66,7 +67,6 @@ const Register = () => {
         <Grid container spacing={1} direction="column" component="form" onSubmit={submitFormHandler}>
           <Grid item xs>
             <TextField
-              required
               label="Username"
               name="username"
               autoComplete="new-username"
@@ -76,7 +76,6 @@ const Register = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              required
               label="Password"
               type="password"
               name="password"
