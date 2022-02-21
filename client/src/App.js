@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Products from './containers/Products/Products';
 import NewProduct from './containers/NewProduct/NewProduct';
 import Register from './containers/Register/Register';
+import Login from './containers/Login/Login';
 
 const App = () => (
   <>
@@ -19,6 +20,7 @@ const App = () => (
           <Route path="/" exact component={Products}/>
           <Route path="/products/new" component={NewProduct}/>
           <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login}/>
         </Switch>
       </Container>
     </main>

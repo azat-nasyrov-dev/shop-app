@@ -35,6 +35,7 @@ const AppToolbar = () => {
             </Grid>
             <Grid item>
               <Button component={Link} to="/register" color="inherit">Sign up</Button>
+              <Button component={Link} to="/login" color="inherit">Sign in</Button>
             </Grid>
           </Grid>
         </Toolbar>

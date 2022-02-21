@@ -10,9 +10,13 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: async value => {
-        const user = await User.findOne({username: value});
-        return !user;
+      validator: async function (value) {
+        if (this.isModified('username')) {
+          const user = await User.findOne({username: value});
+          return !user;
+        }
+
+        return true;
       },
       message: 'This user is already registered'
     }
