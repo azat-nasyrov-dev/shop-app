@@ -9,6 +9,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: async value => {
+        const user = await User.findOne({username: value});
+        return !user;
+      },
+      message: 'This user is already registered'
+    }
   },
   password: {
     type: String,
