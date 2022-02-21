@@ -17,7 +17,11 @@ export const registerUser = userData => {
       dispatch(registerUserSuccess(response.data));
       dispatch(historyPush('/'));
     } catch (error) {
-      dispatch(registerUserFailure(error));
+      if (error.response && error.response.data) {
+        dispatch(registerUserFailure(error.response.data));
+      } else {
+        dispatch(registerUserFailure({global: 'No internet'}));
+      }
     }
   }
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Container from '@material-ui/core/Container';
@@ -43,6 +43,8 @@ const Register = () => {
     password: '',
   });
 
+  const error = useSelector(state => state.users.registerError);
+
   const inputChangeHandler = e => {
     const {name, value} = e.target;
 
@@ -53,6 +55,14 @@ const Register = () => {
     e.preventDefault();
 
     dispatch(registerUser({...user}));
+  };
+
+  const getFieldError = fieldName => {
+    try {
+      return error.errors[fieldName].message;
+    } catch (e) {
+      return undefined;
+    }
   };
 
   return (
@@ -71,6 +81,8 @@ const Register = () => {
               name="username"
               autoComplete="new-username"
               value={user.username}
+              error={Boolean(getFieldError('username'))}
+              helperText={getFieldError('username')}
               onChange={inputChangeHandler}
             />
           </Grid>
@@ -81,6 +93,8 @@ const Register = () => {
               name="password"
               autoComplete="new-password"
               value={user.password}
+              error={Boolean(getFieldError('password'))}
+              helperText={getFieldError('password')}
               onChange={inputChangeHandler}
             />
           </Grid>
