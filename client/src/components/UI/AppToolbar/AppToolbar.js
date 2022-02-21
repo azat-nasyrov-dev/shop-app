@@ -1,11 +1,13 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import UserMenu from './Menu/UserMenu';
+import AnonymousMenu from './Menu/AnonymousMenu';
 
 const useStyles = makeStyles(theme => ({
   mainLink: {
@@ -22,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 const AppToolbar = () => {
   const classes = useStyles();
+  const user = useSelector(state => state.users.user);
 
   return (
     <>
@@ -34,8 +37,11 @@ const AppToolbar = () => {
               </Typography>
             </Grid>
             <Grid item>
-              <Button component={Link} to="/register" color="inherit">Sign up</Button>
-              <Button component={Link} to="/login" color="inherit">Sign in</Button>
+              {user ? (
+                <UserMenu user={user}/>
+              ) : (
+                <AnonymousMenu/>
+              )}
             </Grid>
           </Grid>
         </Toolbar>
