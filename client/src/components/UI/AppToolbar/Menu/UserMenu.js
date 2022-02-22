@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {logoutUser} from '../../../../store/actions/usersActions';
 
 const UserMenu = ({user}) => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = event => {
@@ -29,7 +32,7 @@ const UserMenu = ({user}) => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My Account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
       </Menu>
     </>
   );
