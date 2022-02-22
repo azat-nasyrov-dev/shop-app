@@ -3,5 +3,12 @@ const rootPath = __dirname;
 
 module.exports = {
   rootPath,
-  uploadPath: path.join(rootPath, 'public/uploads')
+  uploadPath: path.join(rootPath, 'public/uploads'),
+  db: {
+    url: 'mongodb://localhost/shop',
+    options: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+  }
 };

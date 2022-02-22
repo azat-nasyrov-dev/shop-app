@@ -5,6 +5,7 @@ const categories = require('./app/categories');
 const users = require('./app/users');
 const mongoose = require('mongoose');
 const exitHook = require('async-exit-hook');
+const config = require('./config');
 
 const app = express();
 app.use(express.static('public'));
@@ -18,10 +19,10 @@ app.use('/categories', categories);
 app.use('/users', users);
 
 const run = async () => {
-  await mongoose.connect('mongodb://localhost/shop', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(
+    config.db.url,
+    config.db.options
+  );
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);

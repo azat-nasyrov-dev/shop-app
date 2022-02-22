@@ -30,7 +30,7 @@ const ProductItem = ({title, price, image, id}) => {
   let cardImage = imageNotAvailable;
 
   if (image) {
-    cardImage = apiURL + '/uploads/' + image
+    cardImage = apiURL + '/' + image;
   }
 
   return (

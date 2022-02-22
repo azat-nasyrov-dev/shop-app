@@ -46,7 +46,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     const productData = req.body;
 
     if (req.file) {
-      productData.image = req.file.filename;
+      productData.image = 'uploads/' + req.file.filename;
     }
 
     const product = new Product(productData);
