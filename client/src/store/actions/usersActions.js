@@ -1,4 +1,4 @@
-import axios from '../../axiosApi';
+import axiosApi from '../../axiosApi';
 import {historyPush} from './historyActions';
 import {NotificationManager} from 'react-notifications';
 
@@ -20,13 +20,21 @@ const loginUserRequest = () => ({type: LOGIN_USER_REQUEST});
 const loginUserSuccess = user => ({type: LOGIN_USER_SUCCESS, user});
 const loginUserFailure = error => ({type: LOGIN_USER_FAILURE, error});
 
-export const logoutUser = () => ({type: LOGOUT_USER});
+export const logoutUser = () => {
+  return async (dispatch, getState) => {
+    const token = getState().users.user.token;
+
+    await axiosApi.delete('/users/sessions', {headers: {'Authorization': token}});
+    dispatch({type: LOGOUT_USER});
+    dispatch(historyPush('/'));
+  };
+};
 
 export const registerUser = userData => {
   return async dispatch => {
     try {
       dispatch(registerUserRequest());
-      const response = await axios.post('/users', userData);
+      const response = await axiosApi.post('/users', userData);
       dispatch(registerUserSuccess(response.data));
       dispatch(historyPush('/'));
     } catch (error) {
@@ -43,7 +51,7 @@ export const loginUser = userData => {
   return async dispatch => {
     try {
       dispatch(loginUserRequest());
-      const response = await axios.post('/users/sessions', userData);
+      const response = await axiosApi.post('/users/sessions', userData);
       dispatch(loginUserSuccess(response.data.user));
       dispatch(historyPush('/'));
       NotificationManager.success('Login successful');
