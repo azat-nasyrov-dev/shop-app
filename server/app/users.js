@@ -34,6 +34,23 @@ router.post('/sessions', async (req, res) => {
   return res.send({message: 'Username and password correct!', user});
 });
 
+router.delete('/sessions', async (req, res) => {
+  const token = req.get('Authorization');
+  const success = {message: 'Success'};
+
+  if (!token) return res.send(success);
+
+  const user = await User.findOne({token});
+
+  if (!user) return res.send(success);
+
+  user.generateToken();
+
+  await user.save();
+
+  return res.send(success);
+});
+
 router.post('/secret', auth, async (req, res) => {
   return res.send({message: 'Secret message', username: req.user.username});
 });
