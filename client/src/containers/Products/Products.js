@@ -20,6 +20,7 @@ const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.products.products);
   const loading = useSelector(state => state.products.productsLoading);
+  const user = useSelector(state => state.users.user);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -31,9 +32,12 @@ const Products = () => {
         <Grid item>
           <Typography variant="h4">Products</Typography>
         </Grid>
-        <Grid item>
-          <Button color="primary" component={Link} to="/products/new">Add product</Button>
-        </Grid>
+
+        {user?.role === 'admin' && (
+          <Grid item>
+            <Button color="primary" component={Link} to="/products/new">Add product</Button>
+          </Grid>
+        )}
       </Grid>
       <Grid item container spacing={1}>
         {loading ? (
