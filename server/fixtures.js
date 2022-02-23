@@ -40,11 +40,13 @@ const run = async () => {
   await User.create({
     username: 'user',
     password: '1qaz@WSX29',
-    token: nanoid()
+    token: nanoid(),
+    role: 'user'
   }, {
     username: 'admin',
     password: '1qaz@WSX29',
-    token: nanoid()
+    token: nanoid(),
+    role: 'admin'
   });
 
   await mongoose.connection.close();
