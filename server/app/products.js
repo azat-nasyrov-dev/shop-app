@@ -5,6 +5,7 @@ const {nanoid} = require('nanoid');
 const config = require('../config');
 const Product = require('../models/Product');
 const auth = require('../middleware/auth');
+const permit = require('../middleware/permit');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -42,7 +43,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', auth, upload.single('image'), async (req, res) => {
+router.post('/', auth, permit('admin'), upload.single('image'), async (req, res) => {
   try {
     const productData = req.body;
 
