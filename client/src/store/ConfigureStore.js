@@ -4,6 +4,7 @@ import {loadFromLocalStorage, saveToLocalStorage} from './localStorage';
 import productsReducer from './reducers/productsReducer';
 import categoriesReducer from './reducers/categoriesReducer';
 import usersReducer from './reducers/usersReducer';
+import axiosApi from '../axiosApi';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -25,6 +26,16 @@ store.subscribe(() => {
   saveToLocalStorage({
     users: store.getState().users
   });
+});
+
+axiosApi.interceptors.request.use(config => {
+  try {
+    config.headers['Authorization'] = store.getState().users.user.token;
+  } catch (e) {
+    // do nothing, no token exists
+  }
+
+  return config;
 });
 
 export default store;
