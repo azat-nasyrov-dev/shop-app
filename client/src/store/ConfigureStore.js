@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import {loadFromLocalStorage, saveToLocalStorage} from './localStorage';
 import productsReducer from './reducers/productsReducer';
 import categoriesReducer from './reducers/categoriesReducer';
-import usersReducer from './reducers/usersReducer';
+import usersReducer, {initialState} from './reducers/usersReducer';
 import axiosApi from '../axiosApi';
 
 const rootReducer = combineReducers({
@@ -24,7 +24,10 @@ const store = createStore(
 
 store.subscribe(() => {
   saveToLocalStorage({
-    users: store.getState().users
+    users: {
+      ...initialState,
+      user: store.getState().users.user,
+    }
   });
 });
 
@@ -36,6 +39,14 @@ axiosApi.interceptors.request.use(config => {
   }
 
   return config;
+});
+
+axiosApi.interceptors.response.use(res => res, e => {
+  if (!e.response) {
+    e.response = {data: {global: 'No internet'}};
+  }
+
+  throw e;
 });
 
 export default store;

@@ -9,10 +9,11 @@ import {fetchCategories} from '../../store/actions/categoriesActions';
 const NewProduct = ({history}) => {
   const dispatch = useDispatch();
   const categories = useSelector(state => state.categories.categories);
+  const error = useSelector(state => state.products.createProductError);
+  const loading = useSelector(state => state.products.createProductLoading);
 
-  const onProductFormSubmit = async productData => {
-    await dispatch(createProduct(productData));
-    history.push('/');
+  const onProductFormSubmit = productData => {
+    dispatch(createProduct(productData));
   };
 
   useEffect(() => {
@@ -25,7 +26,12 @@ const NewProduct = ({history}) => {
         <Typography variant="h4">New product</Typography>
       </Grid>
       <Grid item xs>
-        <ProductForm onSubmit={onProductFormSubmit} categories={categories}/>
+        <ProductForm
+          onSubmit={onProductFormSubmit}
+          categories={categories}
+          loading={loading}
+          error={error}
+        />
       </Grid>
     </Grid>
   );

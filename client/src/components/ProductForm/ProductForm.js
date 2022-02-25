@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import FileInput from '../UI/Form/FileInput';
 import FormElement from '../UI/Form/FormElement';
+import ButtonWithProgress from '../UI/ButtonWithProgress/ButtonWithProgress';
 
-const ProductForm = ({onSubmit, categories}) => {
+const ProductForm = ({onSubmit, categories, loading, error}) => {
   const [state, setState] = useState({
     title: '',
     price: '',
@@ -45,8 +45,16 @@ const ProductForm = ({onSubmit, categories}) => {
     }));
   };
 
+  const getFieldError = fieldName => {
+    try {
+      return error.errors[fieldName].message;
+    } catch (e) {
+      return undefined;
+    }
+  };
+
   return (
-    <form onSubmit={submitFormHandler}>
+    <form onSubmit={submitFormHandler} noValidate>
       <Grid container direction="column" spacing={2}>
         <FormElement
           required
@@ -56,14 +64,18 @@ const ProductForm = ({onSubmit, categories}) => {
           value={state.category}
           onChange={inputChangeHandler}
           options={categories}
+          error={getFieldError('category')}
         />
+
         <FormElement
           required
           label="Title"
           name="title"
           value={state.title}
           onChange={inputChangeHandler}
+          error={getFieldError('title')}
         />
+
         <FormElement
           required
           type="number"
@@ -71,15 +83,17 @@ const ProductForm = ({onSubmit, categories}) => {
           name="price"
           value={state.price}
           onChange={inputChangeHandler}
+          error={getFieldError('price')}
         />
+
         <FormElement
-          required
           multiline
           rows={3}
           label="Description"
           name="description"
           value={state.description}
           onChange={inputChangeHandler}
+          error={getFieldError('description')}
         />
 
         <Grid item xs>
@@ -87,13 +101,20 @@ const ProductForm = ({onSubmit, categories}) => {
             name="image"
             label="Image"
             onChange={fileChangeHandler}
+            error={getFieldError('image')}
           />
         </Grid>
 
         <Grid item xs>
-          <Button type="submit" color="primary" variant="contained">
+          <ButtonWithProgress
+            type="submit"
+            color="primary"
+            variant="contained"
+            loading={loading}
+            disabled={loading}
+          >
             Create
-          </Button>
+          </ButtonWithProgress>
         </Grid>
       </Grid>
     </form>

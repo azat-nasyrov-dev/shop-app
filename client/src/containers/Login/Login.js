@@ -78,6 +78,7 @@ const Login = () => {
           <FormElement
             label="Username"
             type="text"
+            autoComplete="current-username"
             onChange={inputChangeHandler}
             name="username"
             value={user.username}
@@ -85,6 +86,7 @@ const Login = () => {
           <FormElement
             label="Password"
             type="password"
+            autoComplete="current-password"
             onChange={inputChangeHandler}
             name="password"
             value={user.password}

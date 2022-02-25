@@ -45,7 +45,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', auth, permit('admin'), upload.single('image'), async (req, res) => {
   try {
-    const productData = req.body;
+    const productData = {
+      category: req.body.category || null,
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+    };
 
     if (req.file) {
       productData.image = 'uploads/' + req.file.filename;
