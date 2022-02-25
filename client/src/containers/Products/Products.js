@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {Link, useParams} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import {fetchProducts} from '../../store/actions/productsActions';
 import ProductItem from './ProductItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import ProductsLayout from '../../components/UI/Layout/ProductsLayout';
+import {fetchProducts} from '../../store/actions/productsActions';
 
 const useStyles = makeStyles(theme => ({
   progress: {
@@ -16,47 +17,53 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Products = () => {
+  const params = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
   const products = useSelector(state => state.products.products);
   const loading = useSelector(state => state.products.productsLoading);
   const user = useSelector(state => state.users.user);
+  const categories = useSelector(state => state.categories.categories);
+  const currentCategory = categories.find(c => c._id === params.id);
+  const categoryName = currentCategory ? currentCategory.title : 'All products';
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts(params.id));
+  }, [dispatch, params.id]);
 
   return (
-    <Grid container direction="column" spacing={2}>
-      <Grid item container justifyContent="space-between" alignItems="center">
-        <Grid item>
-          <Typography variant="h4">Products</Typography>
-        </Grid>
-
-        {user?.role === 'admin' && (
+    <ProductsLayout>
+      <Grid container direction="column" spacing={2}>
+        <Grid item container justifyContent="space-between" alignItems="center">
           <Grid item>
-            <Button color="primary" component={Link} to="/products/new">Add product</Button>
+            <Typography variant="h4">{categoryName}</Typography>
           </Grid>
-        )}
-      </Grid>
-      <Grid item container spacing={1}>
-        {loading ? (
-          <Grid container justifyContent="center" alignItems="center" className={classes.progress}>
+
+          {user?.role === 'admin' && (
             <Grid item>
-              <CircularProgress/>
+              <Button color="primary" component={Link} to="/products/new">Add product</Button>
             </Grid>
-          </Grid>
-        ) : products.map(product => (
-          <ProductItem
-            key={product._id}
-            id={product._id}
-            title={product.title}
-            price={product.price}
-            image={product.image}
-          />
-        ))}
+          )}
+        </Grid>
+        <Grid item container spacing={1}>
+          {loading ? (
+            <Grid container justifyContent="center" alignItems="center" className={classes.progress}>
+              <Grid item>
+                <CircularProgress/>
+              </Grid>
+            </Grid>
+          ) : products.map(product => (
+            <ProductItem
+              key={product._id}
+              id={product._id}
+              title={product.title}
+              price={product.price}
+              image={product.image}
+            />
+          ))}
+        </Grid>
       </Grid>
-    </Grid>
+    </ProductsLayout>
   );
 };
 

@@ -22,7 +22,13 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find().populate('category', 'title');
+    const criteria = {};
+
+    if (req.query.category) {
+      criteria.category = req.query.category;
+    }
+
+    const products = await Product.find(criteria).populate('category', 'title');
     res.send(products);
   } catch (e) {
     res.sendStatus(500);

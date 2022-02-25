@@ -18,11 +18,17 @@ export const createProductRequest = () => ({type: CREATE_PRODUCT_REQUEST});
 export const createProductSuccess = () => ({type: CREATE_PRODUCT_SUCCESS});
 export const createProductFailure = error => ({type: CREATE_PRODUCT_FAILURE, error});
 
-export const fetchProducts = () => {
+export const fetchProducts = categoryId => {
   return async dispatch => {
     try {
+      let url = '/products';
+
+      if (categoryId) {
+        url += '?category=' + categoryId;
+      }
+
       dispatch(fetchProductsRequest());
-      const response = await axiosApi.get('/products');
+      const response = await axiosApi.get(url);
       dispatch(fetchProductsSuccess(response.data));
     } catch (e) {
       dispatch(fetchProductsFailure());

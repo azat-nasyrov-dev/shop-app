@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
       color: 'inherit'
     }
   },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1
+  },
   staticToolbar: {
     marginBottom: theme.spacing(2)
   }
@@ -28,7 +31,7 @@ const AppToolbar = () => {
 
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Grid container justifyContent="space-between">
             <Grid item>
