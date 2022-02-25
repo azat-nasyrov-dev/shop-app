@@ -27,6 +27,7 @@ export const logoutUser = () => {
     await axiosApi.delete('/users/sessions', {headers: {'Authorization': token}});
     dispatch({type: LOGOUT_USER});
     dispatch(historyPush('/'));
+    NotificationManager.success('Logged out!');
   };
 };
 

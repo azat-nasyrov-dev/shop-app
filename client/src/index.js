@@ -10,6 +10,7 @@ import theme from './theme';
 import App from './App';
 
 import 'react-notifications/lib/notifications.css';
+import './index.css';
 
 const app = (
   <Provider store={store}>
