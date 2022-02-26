@@ -6,6 +6,7 @@ import Products from './containers/Products/Products';
 import NewProduct from './containers/NewProduct/NewProduct';
 import Register from './containers/Register/Register';
 import Login from './containers/Login/Login';
+import {Helmet} from 'react-helmet';
 
 const ProtectedRoute = ({isAllowed, redirectTo, ...props}) => {
   return isAllowed ?
@@ -19,6 +20,10 @@ const App = () => {
   return (
     <>
       <Layout>
+        <Helmet
+          titleTemplate="%s - Shop"
+          defaultTitle="Shop"
+        />
         <Switch>
           <Route path="/" exact component={Products}/>
           <Route path="/category/:id" component={Products}/>

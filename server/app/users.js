@@ -1,6 +1,8 @@
 const express = require('express');
 const User = require('../models/User');
-const auth = require('../middleware/auth');
+const config = require('../config');
+const axios = require('axios');
+const {nanoid} = require('nanoid');
 
 const router = express.Router();
 
@@ -55,6 +57,45 @@ router.delete('/sessions', async (req, res) => {
   return res.send(success);
 });
 
+router.post('/facebookLogin', async (req, res) => {
+  const inputToken = req.body.accessToken;
 
+  const accessToken = config.facebook.appId + '|' + config.facebook.appSecret;
+
+  const debugTokenUrl = `https://graph.facebook.com/debug_token?input_token=${inputToken}&access_token=${accessToken}`;
+
+  try {
+    const response = await axios.get(debugTokenUrl);
+
+    if (response.data.data.error) {
+      return res.status(401).send({global: 'Facebook token incorrect'});
+    }
+
+    console.log(response.data);
+
+    if (response.data.data['user_id'] !== req.body.id) {
+      return res.status(401).send({global: 'User ID incorrect'});
+    }
+
+    let user = await User.findOne({facebookId: req.body.id});
+
+    if (!user) {
+      user = new User({
+        username: req.body.email,
+        password: nanoid(),
+        facebookId: req.body.id,
+        displayName: req.body.name,
+      });
+    }
+
+    user.generateToken();
+    await user.save();
+
+    res.send({message: 'Success', user});
+
+  } catch (e) {
+    return res.status(401).send({global: 'Facebook token incorrect'});
+  }
+});
 
 module.exports = router;

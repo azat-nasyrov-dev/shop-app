@@ -11,6 +11,7 @@ import Link from '@material-ui/core/Link';
 import {registerUser} from '../../store/actions/usersActions';
 import FormElement from '../../components/UI/Form/FormElement';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
+import {Helmet} from "react-helmet";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -68,6 +69,9 @@ const Register = () => {
 
   return (
     <Container component="section" maxWidth="xs">
+      <Helmet>
+        <title>Sign up</title>
+      </Helmet>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon/>

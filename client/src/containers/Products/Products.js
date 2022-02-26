@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ProductsLayout from '../../components/UI/Layout/ProductsLayout';
 import {fetchProducts} from '../../store/actions/productsActions';
+import {Helmet} from 'react-helmet';
 
 const useStyles = makeStyles(theme => ({
   progress: {
@@ -33,6 +34,9 @@ const Products = () => {
 
   return (
     <ProductsLayout>
+      <Helmet>
+        <title>{categoryName}</title>
+      </Helmet>
       <Grid container direction="column" spacing={2}>
         <Grid item container justifyContent="space-between" alignItems="center">
           <Grid item>

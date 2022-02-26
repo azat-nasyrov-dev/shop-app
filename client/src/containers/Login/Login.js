@@ -14,6 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
 import FacebookLogin from '../../components/UI/FacebookLogin/FacebookLogin';
+import {Helmet} from "react-helmet";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -60,6 +61,9 @@ const Login = () => {
 
   return (
     <Container component="section" maxWidth="xs">
+      <Helmet>
+        <title>Sign in</title>
+      </Helmet>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon/>
