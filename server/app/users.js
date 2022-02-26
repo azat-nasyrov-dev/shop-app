@@ -55,8 +55,6 @@ router.delete('/sessions', async (req, res) => {
   return res.send(success);
 });
 
-router.post('/secret', auth, async (req, res) => {
-  return res.send({message: 'Secret message', username: req.user.username});
-});
+
 
 module.exports = router;
