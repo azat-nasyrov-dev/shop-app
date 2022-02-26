@@ -57,11 +57,21 @@ export const loginUser = userData => {
       dispatch(historyPush('/'));
       NotificationManager.success('Login successful');
     } catch (error) {
-      if (error.response && error.response.data) {
-        dispatch(loginUserFailure(error.response.data));
-      } else {
-        dispatch(loginUserFailure({global: 'No internet'}));
-      }
+      dispatch(loginUserFailure(error.response.data));
+    }
+  }
+};
+
+export const facebookLogin = data => {
+  return async dispatch => {
+    try {
+      const response = await axiosApi.post('/users/facebookLogin', data);
+      dispatch(loginUserSuccess(response.data.user));
+      dispatch(historyPush('/'));
+      NotificationManager.success('Login successful');
+    } catch (error) {
+      dispatch(loginUserFailure(error.response.data));
+      NotificationManager.error('Login failed');
     }
   }
 };

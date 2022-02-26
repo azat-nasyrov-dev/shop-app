@@ -13,6 +13,7 @@ import {loginUser} from '../../store/actions/usersActions';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
+import FacebookLogin from '../../components/UI/FacebookLogin/FacebookLogin';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -103,6 +104,9 @@ const Login = () => {
             >
               Sign in
             </ButtonWithProgress>
+          </Grid>
+          <Grid item xs>
+            <FacebookLogin/>
           </Grid>
           <Grid item container justifyContent="flex-end">
             <Grid item>
