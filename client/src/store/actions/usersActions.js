@@ -75,3 +75,22 @@ export const facebookLogin = data => {
     }
   }
 };
+
+export const googleLogin = googleData => {
+  return async dispatch => {
+    try {
+      const body = {
+        tokenId: googleData.tokenId,
+        googleId: googleData.googleId
+      };
+
+      const response = await axiosApi.post('/users/googleLogin', body);
+      dispatch(loginUserSuccess(response.data.user));
+      dispatch(historyPush('/'));
+      NotificationManager.success('Login successful');
+    } catch (error) {
+      dispatch(loginUserFailure(error.response.data));
+      NotificationManager.error('Login failed');
+    }
+  }
+};

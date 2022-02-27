@@ -5,14 +5,14 @@ const {nanoid} = require('nanoid');
 const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
     validate: {
       validator: async function (value) {
-        if (this.isModified('username')) {
-          const user = await User.findOne({username: value});
+        if (this.isModified('email')) {
+          const user = await User.findOne({email: value});
           return !user;
         }
 
@@ -36,7 +36,10 @@ const UserSchema = new mongoose.Schema({
     enum: ['user', 'admin']
   },
   facebookId: String,
-  displayName: String,
+  displayName: {
+    type: String,
+    required: true,
+  }
 });
 
 UserSchema.pre('save', async function (next) {

@@ -40,8 +40,9 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState({
-    username: '',
+    email: '',
     password: '',
+    displayName: '',
   });
 
   const error = useSelector(state => state.users.registerError);
@@ -79,17 +80,19 @@ const Register = () => {
         <Typography component="h1" variant="h5" className={classes.header}>
           Sign up
         </Typography>
-        <Grid container spacing={1} direction="column" component="form" onSubmit={submitFormHandler}>
+        <Grid container spacing={1} direction="column" component="form" onSubmit={submitFormHandler} noValidate>
           <FormElement
-            label="Username"
-            type="text"
+            required
+            label="Email"
+            type="email"
             onChange={inputChangeHandler}
-            name="username"
-            value={user.username}
-            autoComplete="new-username"
-            error={getFieldError('username')}
+            name="email"
+            value={user.email}
+            autoComplete="new-email"
+            error={getFieldError('email')}
           />
           <FormElement
+            required
             label="Password"
             type="password"
             onChange={inputChangeHandler}
@@ -97,6 +100,15 @@ const Register = () => {
             value={user.password}
             autoComplete="new-password"
             error={getFieldError('password')}
+          />
+          <FormElement
+            required
+            label="Display Name"
+            type="text"
+            onChange={inputChangeHandler}
+            name="displayName"
+            value={user.displayName}
+            error={getFieldError('displayName')}
           />
           <Grid item xs>
             <ButtonWithProgress

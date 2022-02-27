@@ -38,15 +38,17 @@ const run = async () => {
   });
 
   await User.create({
-    username: 'user',
+    email: 'user@shop',
     password: '1qaz@WSX29',
     token: nanoid(),
-    role: 'user'
+    role: 'user',
+    displayName: 'User'
   }, {
-    username: 'admin',
+    email: 'admin@shop',
     password: '1qaz@WSX29',
     token: nanoid(),
-    role: 'admin'
+    role: 'admin',
+    displayName: 'Admin'
   });
 
   await mongoose.connection.close();

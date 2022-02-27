@@ -14,7 +14,8 @@ import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
 import FacebookLogin from '../../components/UI/FacebookLogin/FacebookLogin';
-import {Helmet} from "react-helmet";
+import {Helmet} from 'react-helmet';
+import GoogleLogin from '../../components/UI/GoogleLogin/GoogleLogin';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -42,7 +43,7 @@ const Login = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
-    username: '', password: ''
+    email: '', password: ''
   });
   const error = useSelector(state => state.users.loginError);
   const loading = useSelector(state => state.users.loginLoading);
@@ -81,12 +82,12 @@ const Login = () => {
             </Grid>
           )}
           <FormElement
-            label="Username"
-            type="text"
-            autoComplete="current-username"
+            label="Email"
+            type="email"
+            autoComplete="current-email"
             onChange={inputChangeHandler}
-            name="username"
-            value={user.username}
+            name="email"
+            value={user.email}
           />
           <FormElement
             label="Password"
@@ -111,6 +112,9 @@ const Login = () => {
           </Grid>
           <Grid item xs>
             <FacebookLogin/>
+          </Grid>
+          <Grid item xs>
+            <GoogleLogin/>
           </Grid>
           <Grid item container justifyContent="flex-end">
             <Grid item>

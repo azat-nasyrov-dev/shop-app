@@ -4,6 +4,7 @@ import FacebookLoginButton from 'react-facebook-login/dist/facebook-login-render
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Button from '@material-ui/core/Button';
 import {facebookLogin} from '../../../store/actions/usersActions';
+import {facebookAppId} from '../../../config';
 
 const FacebookLogin = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const FacebookLogin = () => {
 
   return (
     <FacebookLoginButton
-      appId="3088835851354539"
+      appId={facebookAppId}
       fields="name,email,picture"
       render={props => (
         <Button
