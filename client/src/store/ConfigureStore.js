@@ -5,6 +5,8 @@ import productsReducer from './reducers/productsReducer';
 import categoriesReducer from './reducers/categoriesReducer';
 import usersReducer, {initialState} from './reducers/usersReducer';
 import axiosApi from '../axiosApi';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './rootSaga';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -16,11 +18,20 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistedState = loadFromLocalStorage();
 
+const sagaMiddleware = createSagaMiddleware();
+
+const middleware = [
+  sagaMiddleware,
+  thunkMiddleware,
+];
+
 const store = createStore(
   rootReducer,
   persistedState,
-  composeEnhancers(applyMiddleware(thunkMiddleware))
+  composeEnhancers(applyMiddleware(...middleware))
 );
+
+sagaMiddleware.run(rootSaga);
 
 store.subscribe(() => {
   saveToLocalStorage({

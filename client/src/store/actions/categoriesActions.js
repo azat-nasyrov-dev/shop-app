@@ -1,12 +1,9 @@
-import axiosApi from '../../axiosApi';
-
+export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
+export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
 
 export const fetchCategoriesSuccess = categories => ({type: FETCH_CATEGORIES_SUCCESS, categories});
+export const fetchCategoriesRequest = () => ({type: FETCH_CATEGORIES_REQUEST});
+export const fetchCategoriesFailure = () => ({type: FETCH_CATEGORIES_FAILURE});
 
-export const fetchCategories = () => {
-  return async dispatch => {
-    const response = await axiosApi.get('/categories');
-    dispatch(fetchCategoriesSuccess(response.data));
-  };
-};
+

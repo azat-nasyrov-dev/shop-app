@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import {fetchCategories} from "../../../store/actions/categoriesActions";
+import {fetchCategoriesRequest} from '../../../store/actions/categoriesActions';
 
 const drawerWidth = 240;
 
@@ -27,7 +27,7 @@ const AppDrawer = () => {
   const categories = useSelector(state => state.categories.categories);
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchCategoriesRequest());
   }, [dispatch]);
 
   return (
