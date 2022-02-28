@@ -12,10 +12,10 @@ module.exports = {
     },
   },
   facebook: {
-    appId: '3088835851354539',
-    appSecret: '5948f79945c2a6e128e393e9d5353486'
+    appId: process.env.FACEBOOK_APP_ID,
+    appSecret: process.env.FACEBOOK_APP_SECRET,
   },
   google: {
-    clientId: '579163441460-fan61570bg04453t9vv4kfgcr8n29s2n.apps.googleusercontent.com'
+    clientId: process.env.GOOGLE_CLIENT_ID,
   }
 };

@@ -20,6 +20,7 @@
     "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "google-auth-library": "^7.14.0",
     "mongodb": "^4.3.1",
