@@ -1,5 +1,5 @@
-import {takeEvery, put} from 'redux-saga/effects';
-import {FETCH_CATEGORIES_REQUEST, fetchCategoriesFailure, fetchCategoriesSuccess} from '../actions/categoriesActions';
+import {put, takeEvery} from 'redux-saga/effects';
+import {fetchCategoriesRequest, fetchCategoriesFailure, fetchCategoriesSuccess} from '../actions/categoriesActions';
 import axiosApi from '../../axiosApi';
 import {NotificationManager} from 'react-notifications';
 
@@ -14,7 +14,7 @@ export function* fetchCategories() {
 }
 
 const categoriesSagas = [
-  takeEvery(FETCH_CATEGORIES_REQUEST, fetchCategories)
+  takeEvery(fetchCategoriesRequest, fetchCategories)
 ];
 
 export default categoriesSagas;

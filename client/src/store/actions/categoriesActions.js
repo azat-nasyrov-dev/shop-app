@@ -1,9 +1,9 @@
-export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST';
-export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
-export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
+import categoriesSlice from '../slices/categoriesSlice';
 
-export const fetchCategoriesSuccess = categories => ({type: FETCH_CATEGORIES_SUCCESS, categories});
-export const fetchCategoriesRequest = () => ({type: FETCH_CATEGORIES_REQUEST});
-export const fetchCategoriesFailure = () => ({type: FETCH_CATEGORIES_FAILURE});
+export const {
+  fetchCategoriesRequest,
+  fetchCategoriesSuccess,
+  fetchCategoriesFailure,
+} = categoriesSlice.actions;
 
 

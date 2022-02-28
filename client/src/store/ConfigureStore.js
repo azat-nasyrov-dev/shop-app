@@ -1,20 +1,19 @@
-import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
+import {combineReducers} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {loadFromLocalStorage, saveToLocalStorage} from './localStorage';
 import productsReducer from './reducers/productsReducer';
-import categoriesReducer from './reducers/categoriesReducer';
 import usersReducer, {initialState} from './reducers/usersReducer';
 import axiosApi from '../axiosApi';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
+import {configureStore} from '@reduxjs/toolkit';
+import categoriesSlice from './slices/categoriesSlice';
 
 const rootReducer = combineReducers({
   products: productsReducer,
-  categories: categoriesReducer,
+  categories: categoriesSlice.reducer,
   users: usersReducer,
 });
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistedState = loadFromLocalStorage();
 
@@ -25,11 +24,12 @@ const middleware = [
   thunkMiddleware,
 ];
 
-const store = createStore(
-  rootReducer,
-  persistedState,
-  composeEnhancers(applyMiddleware(...middleware))
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware,
+  devTools: true,
+  preloadedState: persistedState,
+});
 
 sagaMiddleware.run(rootSaga);
 
