@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {logoutUser} from '../../../../store/actions/usersActions';
+import {logoutRequest} from '../../../../store/actions/usersActions';
 
 const UserMenu = ({user}) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const UserMenu = ({user}) => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My Account</MenuItem>
-        <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
+        <MenuItem onClick={() => dispatch(logoutRequest())}>Logout</MenuItem>
       </Menu>
     </>
   );

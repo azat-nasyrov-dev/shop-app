@@ -8,7 +8,7 @@ import ProductItem from './ProductItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ProductsLayout from '../../components/UI/Layout/ProductsLayout';
-import {fetchProducts} from '../../store/actions/productsActions';
+import {fetchProductsRequest} from '../../store/actions/productsActions';
 import {Helmet} from 'react-helmet';
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +29,7 @@ const Products = () => {
   const categoryName = currentCategory ? currentCategory.title : 'All products';
 
   useEffect(() => {
-    dispatch(fetchProducts(params.id));
+    dispatch(fetchProductsRequest(params.id));
   }, [dispatch, params.id]);
 
   return (

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ProductForm from '../../components/ProductForm/ProductForm';
-import {createProduct} from '../../store/actions/productsActions';
+import {createProductRequest} from '../../store/actions/productsActions';
 import {fetchCategoriesRequest} from '../../store/actions/categoriesActions';
 
 const NewProduct = ({history}) => {
@@ -12,13 +12,13 @@ const NewProduct = ({history}) => {
   const error = useSelector(state => state.products.createProductError);
   const loading = useSelector(state => state.products.createProductLoading);
 
-  const onProductFormSubmit = productData => {
-    dispatch(createProduct(productData));
-  };
-
   useEffect(() => {
     dispatch(fetchCategoriesRequest());
   }, [dispatch]);
+
+  const onProductFormSubmit = productData => {
+    dispatch(createProductRequest(productData));
+  };
 
   return (
     <Grid container direction="column" spacing={2}>

@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import FormElement from '../../components/UI/Form/FormElement';
 import Link from '@material-ui/core/Link';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import {loginUser} from '../../store/actions/usersActions';
+import {loginRequest} from '../../store/actions/usersActions';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
@@ -57,7 +57,7 @@ const Login = () => {
   const submitFormHandler = e => {
     e.preventDefault();
 
-    dispatch(loginUser({...user}));
+    dispatch(loginRequest({...user}));
   };
 
   return (

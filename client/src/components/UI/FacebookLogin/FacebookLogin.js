@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import FacebookLoginButton from 'react-facebook-login/dist/facebook-login-render-props';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Button from '@material-ui/core/Button';
-import {facebookLogin} from '../../../store/actions/usersActions';
+import {facebookLoginRequest} from '../../../store/actions/usersActions';
 import {facebookAppId} from '../../../config';
 
 const FacebookLogin = () => {
@@ -11,7 +11,7 @@ const FacebookLogin = () => {
 
   const facebookResponse = response => {
     if (response.id) {
-      dispatch(facebookLogin(response));
+      dispatch(facebookLoginRequest(response));
     }
   };
 

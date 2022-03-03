@@ -8,10 +8,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
-import {registerUser} from '../../store/actions/usersActions';
+import {registerRequest} from '../../store/actions/usersActions';
 import FormElement from '../../components/UI/Form/FormElement';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
-import {Helmet} from "react-helmet";
+import {Helmet} from 'react-helmet';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -57,7 +57,7 @@ const Register = () => {
   const submitFormHandler = e => {
     e.preventDefault();
 
-    dispatch(registerUser({...user}));
+    dispatch(registerRequest({...user}));
   };
 
   const getFieldError = fieldName => {

@@ -1,13 +1,4 @@
-import history from '../../history';
+import {createAction} from '@reduxjs/toolkit';
 
-export const historyPush = payload => {
-  return () => {
-    history.push(payload);
-  };
-};
-
-export const historyReplace = payload => {
-  return () => {
-    history.replace(payload);
-  };
-};
+export const historyPush = createAction('history/push');
+export const historyReplace = createAction('history/replace');

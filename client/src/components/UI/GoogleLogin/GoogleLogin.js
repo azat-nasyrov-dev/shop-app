@@ -4,14 +4,13 @@ import {googleClientId} from '../../../config';
 import Button from '@material-ui/core/Button';
 import GoogleIcon from '../GoogleIcon/GoogleIcon';
 import GoogleLoginButton from 'react-google-login';
-import {googleLogin} from '../../../store/actions/usersActions';
+import {googleLoginRequest} from '../../../store/actions/usersActions';
 
 const GoogleLogin = () => {
   const dispatch = useDispatch();
 
   const handleLogin = response => {
-    console.log(response);
-    dispatch(googleLogin(response));
+    dispatch(googleLoginRequest(response));
   };
 
   return (
