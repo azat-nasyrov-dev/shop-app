@@ -1,16 +1,19 @@
 import {put, takeEvery} from 'redux-saga/effects';
 import axiosApi from '../../axiosApi';
 import {
-  facebookLoginRequest, googleLoginRequest,
-  loginFailure, loginRequest,
-  loginSuccess, logoutRequest,
+  facebookLoginRequest,
+  googleLoginRequest,
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+  logoutRequest,
   logoutSuccess,
   registerFailure,
   registerRequest,
   registerSuccess
 } from '../actions/usersActions';
 import {historyPush} from '../actions/historyActions';
-import {NotificationManager} from 'react-notifications';
+import {addNotification} from "../actions/notifierActions";
 
 export function* registerUser({payload: userData}) {
   try {
@@ -32,7 +35,7 @@ export function* loginUser({payload: userData}) {
     const response = yield axiosApi.post('/users/sessions', userData);
     yield put(loginSuccess(response.data.user));
     yield put(historyPush('/'));
-    NotificationManager.success('Login successful');
+    yield put(addNotification({message: 'Login successful', options: {variant: 'success'}}));
   } catch (error) {
     yield put(loginFailure(error.response.data));
   }
@@ -43,7 +46,7 @@ export function* facebookLogin({payload: data}) {
     const response = yield axiosApi.post('/users/facebookLogin', data);
     yield put(loginSuccess(response.data.user));
     yield put(historyPush('/'));
-    NotificationManager.success('Login successful');
+    yield put(addNotification({message: 'Login successful', options: {variant: 'success'}}));
   } catch (error) {
     yield put(loginFailure(error.response.data));
   }
@@ -55,7 +58,7 @@ export function* googleLogin({payload: {tokenId, googleId}}) {
     const response = yield axiosApi.post('/users/googleLogin', body);
     yield put(loginSuccess(response.data.user));
     yield put(historyPush('/'));
-    NotificationManager.success('Login successful');
+    yield put(addNotification({message: 'Login successful', options: {variant: 'success'}}));
   } catch (error) {
     yield put(loginFailure(error.response.data));
   }
@@ -66,9 +69,9 @@ export function* logout() {
     yield axiosApi.delete('/users/sessions');
     yield put(logoutSuccess());
     yield put(historyPush('/'));
-    NotificationManager.success('Logged out!');
+    yield put(addNotification({message: 'Logged out', options: {variant: 'success'}}));
   } catch (e) {
-    NotificationManager.error('Could not logout');
+    yield put(addNotification({message: 'Could not logout', options: {variant: 'error'}}));
   }
 }
 

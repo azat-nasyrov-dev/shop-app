@@ -1,13 +1,15 @@
 import {put, takeEvery} from 'redux-saga/effects';
 import axiosApi from '../../axiosApi';
-import {NotificationManager} from 'react-notifications';
 import {
-  createProductFailure, createProductRequest,
+  createProductFailure,
+  createProductRequest,
   createProductSuccess,
-  fetchProductsFailure, fetchProductsRequest,
+  fetchProductsFailure,
+  fetchProductsRequest,
   fetchProductsSuccess
 } from '../actions/productsActions';
 import {historyPush} from '../actions/historyActions';
+import {addNotification} from "../actions/notifierActions";
 
 export function* fetchProducts({payload: categoryId}) {
   try {
@@ -21,7 +23,7 @@ export function* fetchProducts({payload: categoryId}) {
     yield put(fetchProductsSuccess(response.data));
   } catch (e) {
     yield put(fetchProductsFailure());
-    NotificationManager.error('Could not fetch products');
+    yield put(addNotification({message: 'Fetch products failed', options: {variant: 'error'}}));
   }
 }
 
@@ -30,10 +32,10 @@ export function* createProduct({payload: productData}) {
     yield axiosApi.post('/products', productData);
     yield put(createProductSuccess());
     yield put(historyPush('/'));
-    NotificationManager.success('Product created successfully');
+    yield put(addNotification({message: 'Product created successfully', options: {variant: 'success'}}));
   } catch (e) {
     yield put(createProductFailure(e.response.data));
-    NotificationManager.error('Could not create product');
+    yield put(addNotification({message: 'Create product failed', options: {variant: 'error'}}));
   }
 }
 
