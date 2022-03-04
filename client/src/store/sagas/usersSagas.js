@@ -14,7 +14,12 @@ import {NotificationManager} from 'react-notifications';
 
 export function* registerUser({payload: userData}) {
   try {
-    const response = yield axiosApi.post('/users', userData);
+    const data = new FormData();
+    Object.keys(userData).forEach(key => {
+      data.append(key, userData[key]);
+    });
+
+    const response = yield axiosApi.post('/users', data);
     yield put(registerSuccess(response.data));
     yield put(historyPush('/'));
   } catch (error) {

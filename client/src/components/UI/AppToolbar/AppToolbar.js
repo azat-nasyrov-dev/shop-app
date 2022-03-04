@@ -33,7 +33,7 @@ const AppToolbar = () => {
     <>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Grid container justifyContent="space-between">
+          <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
               <Typography variant="h6">
                 <Link to="/" className={classes.mainLink}>Computer parts shop</Link>

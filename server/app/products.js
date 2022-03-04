@@ -1,22 +1,8 @@
-const path = require('path');
 const express = require('express');
-const multer = require('multer');
-const {nanoid} = require('nanoid');
-const config = require('../config');
 const Product = require('../models/Product');
 const auth = require('../middleware/auth');
 const permit = require('../middleware/permit');
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, config.uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, nanoid() + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({storage});
+const upload = require('../multer').products;
 
 const router = express.Router();
 
@@ -59,7 +45,7 @@ router.post('/', auth, permit('admin'), upload.single('image'), async (req, res)
     };
 
     if (req.file) {
-      productData.image = 'uploads/' + req.file.filename;
+      productData.image = req.file.filename;
     }
 
     const product = new Product(productData);

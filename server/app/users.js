@@ -1,19 +1,24 @@
+const fs = require('fs').promises;
 const express = require('express');
 const User = require('../models/User');
 const config = require('../config');
 const axios = require('axios');
 const {nanoid} = require('nanoid');
 const {OAuth2Client} = require('google-auth-library');
+const path = require('path');
+const {downloadAvatar} = require('../utils');
+const upload = require('../multer').avatar;
 
 const googleClient = new OAuth2Client(config.google.clientId);
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('avatar'), async (req, res) => {
   try {
     const user = new User({
       email: req.body.email,
       password: req.body.password,
       displayName: req.body.displayName,
+      avatar: req.file ? req.file.filename : null
     });
 
     user.generateToken();
@@ -86,6 +91,9 @@ router.post('/facebookLogin', async (req, res) => {
       user = await User.findOne({facebookId: req.body.id});
     }
 
+    const pictureUrl = req.body.picture.data.url;
+    const avatarFilename = await downloadAvatar(pictureUrl);
+
     if (!user) {
       user = new User({
         email: req.body.email || nanoid(),
@@ -95,12 +103,14 @@ router.post('/facebookLogin', async (req, res) => {
       });
     }
 
+    user.avatar = avatarFilename;
     user.generateToken();
     await user.save();
 
     res.send({message: 'Success', user});
 
   } catch (e) {
+    console.error(e);
     return res.status(401).send({global: 'Facebook token incorrect'});
   }
 });

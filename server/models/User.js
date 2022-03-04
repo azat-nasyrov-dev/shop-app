@@ -39,7 +39,8 @@ const UserSchema = new mongoose.Schema({
   displayName: {
     type: String,
     required: true,
-  }
+  },
+  avatar: String,
 });
 
 UserSchema.pre('save', async function (next) {

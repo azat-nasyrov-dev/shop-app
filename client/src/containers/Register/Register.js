@@ -12,6 +12,7 @@ import {registerRequest} from '../../store/actions/usersActions';
 import FormElement from '../../components/UI/Form/FormElement';
 import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
 import {Helmet} from 'react-helmet';
+import FileInput from '../../components/UI/Form/FileInput';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -43,6 +44,7 @@ const Register = () => {
     email: '',
     password: '',
     displayName: '',
+    avatar: null,
   });
 
   const error = useSelector(state => state.users.registerError);
@@ -52,6 +54,16 @@ const Register = () => {
     const {name, value} = e.target;
 
     setUser(prev => ({...prev, [name]: value}));
+  };
+
+  const fileChangeHandler = e => {
+    const name = e.target.name;
+    const file = e.target.files[0];
+
+    setUser(prevState => ({
+      ...prevState,
+      [name]: file,
+    }));
   };
 
   const submitFormHandler = e => {
@@ -110,6 +122,14 @@ const Register = () => {
             value={user.displayName}
             error={getFieldError('displayName')}
           />
+          <Grid item xs>
+            <FileInput
+              name="avatar"
+              label="Avatar"
+              onChange={fileChangeHandler}
+              error={getFieldError('avatar')}
+            />
+          </Grid>
           <Grid item xs>
             <ButtonWithProgress
               type="submit"
