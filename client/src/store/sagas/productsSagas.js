@@ -9,7 +9,7 @@ import {
   fetchProductsSuccess
 } from '../actions/productsActions';
 import {historyPush} from '../actions/historyActions';
-import {addNotification} from "../actions/notifierActions";
+import {addNotification} from '../actions/notifierActions';
 
 export function* fetchProducts({payload: categoryId}) {
   try {

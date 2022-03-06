@@ -13,7 +13,7 @@ import {
   registerSuccess
 } from '../actions/usersActions';
 import {historyPush} from '../actions/historyActions';
-import {addNotification} from "../actions/notifierActions";
+import {addNotification} from '../actions/notifierActions';
 
 export function* registerUser({payload: userData}) {
   try {

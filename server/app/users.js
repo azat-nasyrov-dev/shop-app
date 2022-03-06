@@ -1,11 +1,9 @@
-const fs = require('fs').promises;
 const express = require('express');
 const User = require('../models/User');
 const config = require('../config');
 const axios = require('axios');
 const {nanoid} = require('nanoid');
 const {OAuth2Client} = require('google-auth-library');
-const path = require('path');
 const {downloadAvatar} = require('../utils');
 const upload = require('../multer').avatar;
 
